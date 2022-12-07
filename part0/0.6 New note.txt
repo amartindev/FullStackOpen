@@ -1,0 +1,11 @@
+title 0.6:New note
+
+note over browser:
+click on the button creates a new note
+new note is added to the notes list
+the list of new notes gets rendered
+the new note is posted to the server
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: response Statuscode 201 created {message:"note created"}
