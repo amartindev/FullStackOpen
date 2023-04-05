@@ -12,24 +12,36 @@ const Display = props => <div>{props.text} {props.value}</div>
 const Statistics = (props) => {
   const [average, setAverage] = useState(0)
   const [positive, setPositive] = useState(0)
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    let total = props.good - props.bad;
+    let diference = props.good - props.bad;
     let all = props.good + props.neutral + props.bad;
-    setAverage(total / all);
+    setTotal(all);
+    setAverage(diference / all);
     setPositive((props.good * 100 / all) + '%');
   }, [props.good, props.neutral, props.bad])
 
-  return (
-    <div>
-      <h2>Statistics</h2>
-      <Display value={props.good} text="good" />
-      <Display value={props.neutral} text="neutral" />
-      <Display value={props.bad} text="bad" />
-      <Display value={average} text="average" />
-      <Display value={positive} text="positive" />
-    </div>
-  )
+  if(props.good === 0 && props.neutral === 0 && props.bad === 0) {
+    return (
+      <div>
+        <h2>Statistics</h2>
+        <p>No feedback given</p>
+      </div>
+    )
+  }else {
+    return (
+      <div>
+        <h2>Statistics</h2>
+        <Display value={props.good} text="good" />
+        <Display value={props.neutral} text="neutral" />
+        <Display value={props.bad} text="bad" />
+        <Display value={total} text="total" />
+        <Display value={average} text="average" />
+        <Display value={positive} text="positive" />
+      </div>
+    )
+  }
 }
 
 const App = () => {
