@@ -3,15 +3,17 @@ import Phonebook from './phonebook'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '123456789' }
   ]) 
   const [ newName, setNewName ] = useState('')
+  const [ newNumber, setNewNumber]= useState('')
 
   const addName = (event) => {
     event.preventDefault()
 
     const newPerson = {
       name: newName,
+      number: newNumber
     }
 
     if (persons.find(person => person.name === newName)) {
@@ -21,10 +23,15 @@ const App = () => {
     }
 
     setNewName('');
+    setNewNumber('')
   }
 
   const nameChange = (event) => {
     setNewName(event.target.value)
+  }
+
+  const numChange = (event) => {
+    setNewNumber(event.target.value)
   }
   
   return (
@@ -32,12 +39,16 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addName}>
         <div>
-          name: <input value={newName} onChange={nameChange}/>
+          Name: <input value={newName} onChange={nameChange}/>
+        </div>
+        <div>
+          Number: <input value={newNumber} onChange={numChange}/> 
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
+
       <h2>Numbers</h2>
       <ul>
         {persons.map(name => (
