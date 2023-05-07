@@ -1,37 +1,30 @@
-import React from 'react'
+import React from 'react';
+import Show from './show';
 
-const Countries = ({ countries }) => {
-    if(countries.length === 1){
-        let country=countries[0];
+const Countries = ({ countries, selectedCountry, onShowCountry }) => {
+
+    if (selectedCountry) {
+        return <Show country={selectedCountry} />;
+    } else if (countries.length === 1) {
+        return <Show country={countries[0]} />;
+    } else if (countries.length > 10 && countries.length < 250) {
         return (
             <div>
-                <h2>{country.name.common}</h2>
-                <p>Capital: {country.capital} </p>
-                <p>Population: {country.population} </p>
-                <h3>Languages</h3>
-                <ul>
-                    {Object.values(country.languages).map(item => (
-                        <li key={item}> {item}</li>
-                    ))}
-                </ul>
-                <img src={country.flags.png} alt='flag' />
-            </div>
-        )
-    }else if(countries.length > 10){
-        return (
-        <div>
             <p>Too many matches, specify another filter</p>
-        </div>
-        )
-    }else {
+            </div>
+        );  
+    } else if (countries.length < 10) {
         return (
             <ul>
-            {countries.map(country => (
-                <li key={country.name.common}>{country.name.common}</li>
+            {countries.map((country) => (
+                <li key={country.name.common}>
+                {country.name.common}
+                <button onClick={() => onShowCountry(country)}>show</button>
+                </li>
             ))}
             </ul>
-        )
+        );
     }
-}
+};
 
-export default Countries
+export default Countries;
