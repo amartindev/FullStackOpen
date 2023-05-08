@@ -3,6 +3,7 @@ import Phonebook from './components/phonebook'
 import Form from './components/form'
 import Filter from './components/filter'
 import axios from 'axios'
+import noteBook from './services/notes'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,27 +12,30 @@ const App = () => {
   const [findPerson, setNewFindPerson] =useState('')
 
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons(response.data)
+    noteBook
+    .getAll()
+    .then(initialAgenda => {
+      setPersons(initialAgenda)
     })
   }, [])
 
   const addName = (event) => {
     event.preventDefault()
-
     const newPerson = {
       name: newName,
-      number: newNumber
+      number: newNumber,
+      id: persons.length + 1
     }
 
     if (persons.find(person => person.name === newName)) {
       window.alert(`${newName} is already added to the phonebook`)
     } else {
-      setPersons(persons.concat(newPerson))
+      noteBook
+      .create(newPerson)
+      .then(returnedAgenda => {
+        setPersons(persons.concat(returnedAgenda))
+      })
     }
-
     setNewName('');
     setNewNumber('')
   }
