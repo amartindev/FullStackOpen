@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Phonebook from './components/phonebook'
 import Form from './components/form'
 import Filter from './components/filter'
-import axios from 'axios'
 import noteBook from './services/notes'
 
 const App = () => {
