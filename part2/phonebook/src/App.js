@@ -19,6 +19,7 @@ const App = () => {
     })
   }, [])
 
+
   const addName = (event) => {
     event.preventDefault()
     const newPerson = {
@@ -28,7 +29,12 @@ const App = () => {
     }
 
     if (persons.find(person => person.name === newName)) {
-      window.alert(`${newName} is already added to the phonebook`)
+      if(window.confirm(`${newName} is already added to the phonebook, remplace the old number with a new one?`)){
+        const updatedPersons = persons.map(person =>
+          person.name === newName ? { ...person, number: newNumber } : person
+        );
+        setPersons(updatedPersons);
+      }
     } else {
       noteBook
       .create(newPerson)
