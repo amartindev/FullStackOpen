@@ -47,10 +47,14 @@ const App = () => {
       .then(returnedAgenda => {
         setPersons(persons.concat(returnedAgenda))
       })
-      setMessage(`Added '${newName}'.`)
+      .then(()=> {setMessage(`Added '${newName}'.`)
         setTimeout(() => {
           setMessage(null)
-        }, 5000)
+        }, 5000)})
+      .catch((error)=> {setMessage(`Information of '${newName}' has already been removed from server.`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)})
     }
     setNewName('');
     setNewNumber('')
