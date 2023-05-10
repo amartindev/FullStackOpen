@@ -3,6 +3,7 @@ import Phonebook from './components/phonebook'
 import Form from './components/form'
 import Filter from './components/filter'
 import noteBook from './services/notes'
+import Notification from './components/notification.js'
 import axios from 'axios'
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber]= useState('')
   const [findPerson, setNewFindPerson] =useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     noteBook
@@ -34,6 +36,10 @@ const App = () => {
           person.name === newName ? { ...person, number: newNumber } : person
         );
         setPersons(updatedPersons);
+        setMessage(`Updated '${newName}'.`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
       }
     } else {
       noteBook
@@ -41,6 +47,10 @@ const App = () => {
       .then(returnedAgenda => {
         setPersons(persons.concat(returnedAgenda))
       })
+      setMessage(`Added '${newName}'.`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
     }
     setNewName('');
     setNewNumber('')
@@ -81,6 +91,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={message}/>
       <h2>Phonebook</h2>
       <Filter findPerson={findPerson} findPersonChange={findPersonChange} />
       <Phonebook  persons={foundPersons} deleteName={deleteName}/>
