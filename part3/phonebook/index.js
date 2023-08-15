@@ -1,15 +1,17 @@
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
-app.use(express.json());
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'));
+// app.use(express.json());
+// app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'));
 
-morgan.token("postData", (req) => {
-    if (req.method === "POST") {
-      return JSON.stringify(req.body);
-    }
-  });
+// morgan.token("postData", (req) => {
+//     if (req.method === "POST") {
+//       return JSON.stringify(req.body);
+//     }
+//   });
+
+app.use(express.static('build'))
 
 let persons = [
     {
@@ -89,7 +91,7 @@ app.post("/api/persons", (request, response) => {
     response.json(person);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
